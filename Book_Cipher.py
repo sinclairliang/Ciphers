@@ -31,21 +31,21 @@ def get_numbers(words):
     return numbers
 
 
-def encode(message, numbers):
+def encode(plaintext, numbers):
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
-    for i in range(0, len(message)):
-        current_letter = message[i].upper()
+    for i in range(0, len(plaintext)):
+        current_letter = plaintext[i].upper()
         if current_letter in numbers_to_use:
             output_list.append(numbers_to_use[current_letter].pop(0))
     return output_list
 
 
-def decode(message, numbers):
+def decode(ciphertext, numbers):
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
-    for i in range(0, len(message)):
-        current_number = message[i]
+    for i in range(0, len(ciphertext)):
+        current_number = ciphertext[i]
         for letter, number_list in numbers_to_use.items():
             if current_number in number_list:
                 output_list.append(letter)
@@ -57,13 +57,13 @@ def main():
     words = get_words(new_text)
     numbers = get_numbers(words)
     # print(numbers)
-    message = "SillyIdiot"
-    cipher = [5, 6, 62, 117, 798, 15, 60, 32, 16, 3]
+    message = "with"
+
     l = encode(message, numbers)
-    d = decode(cipher, numbers)
+    # d = decode(cipher, numbers)
     print(l)
-    print(d)
-    # print(numbers)
+    # print(d)
+    print(numbers)
 
 
 main()
