@@ -3,7 +3,7 @@ import re
 text = "Apple Banana Cherry Dog Elephant Ferry Goose Gray "
 
 
-def get_book_text(book_aadress):
+def cleaning_text(book_aadress):
     original_text = open(book_aadress).read()
     new_text = re.sub('[^a-zA-Z0-9]', r' ', original_text)
     re.sub(' +', ' ', new_text).strip()
@@ -32,23 +32,37 @@ def get_numbers(words):
     return numbers
 
 
-def encode(text, numbers):
+def encode(message, numbers):
     output_list = list()
-    for i in range(0, len(text) - 1):
-        current_letter = text[i].upper()
+    for i in range(0, len(message)):
+        current_letter = message[i].upper()
         if current_letter in numbers:
             output_list.append(numbers[current_letter].pop(0))
     return output_list
 
 
+def decode(message, numbers):
+    output_list = list()
+    for i in range(0, len(message)):
+        current_number = message[i]
+        for letter, number_list in numbers.items():
+            if current_number in number_list:
+                output_list.append(letter)
+    return output_list
+
+
 def main():
-    new_text = get_book_text('test.txt')
+    new_text = cleaning_text('test.txt')
     words = get_words(new_text)
     numbers = get_numbers(words)
-    message = "Hello"
-    l = encode(message, numbers)
-    print(l)
-
+    # print(numbers)
+    message = "SillyIdiot"
+    cipher = [5, 6, 62, 117, 798, 15, 60, 32, 16, 3]
+    # l = encode(message, numbers)
+    d = decode(cipher, numbers)
+    # print(l)
+    print(d)
+    # print(numbers)
 
 
 main()
