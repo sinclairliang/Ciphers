@@ -49,20 +49,20 @@ def decode(ciphertext, numbers):
         for letter, number_list in numbers_to_use.items():
             if current_number in number_list:
                 output_list.append(letter)
-    return output_list
+    return ''.join(output_list)
 
 
 def main():
-    new_text = cleaning_text('test.txt')
+    new_text = cleaning_text('book1.txt')
     words = get_words(new_text)
     numbers = get_numbers(words)
     # print(numbers)
-    message = "with"
-
+    message = "Pollo"
+    cipher = [3, 9, 46, 160, 33]
     l = encode(message, numbers)
-    # d = decode(cipher, numbers)
+    d = decode(cipher, numbers)
     print(l)
-    # print(d)
+    print(d)
     print(numbers)
 
 
