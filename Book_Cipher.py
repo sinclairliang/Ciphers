@@ -1,6 +1,5 @@
+import copy
 import re
-
-text = "Apple Banana Cherry Dog Elephant Ferry Goose Gray "
 
 
 def cleaning_text(book_aadress):
@@ -33,19 +32,21 @@ def get_numbers(words):
 
 
 def encode(message, numbers):
+    numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, len(message)):
         current_letter = message[i].upper()
-        if current_letter in numbers:
-            output_list.append(numbers[current_letter].pop(0))
+        if current_letter in numbers_to_use:
+            output_list.append(numbers_to_use[current_letter].pop(0))
     return output_list
 
 
 def decode(message, numbers):
+    numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, len(message)):
         current_number = message[i]
-        for letter, number_list in numbers.items():
+        for letter, number_list in numbers_to_use.items():
             if current_number in number_list:
                 output_list.append(letter)
     return output_list
@@ -58,9 +59,9 @@ def main():
     # print(numbers)
     message = "SillyIdiot"
     cipher = [5, 6, 62, 117, 798, 15, 60, 32, 16, 3]
-    # l = encode(message, numbers)
+    l = encode(message, numbers)
     d = decode(cipher, numbers)
-    # print(l)
+    print(l)
     print(d)
     # print(numbers)
 
