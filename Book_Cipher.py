@@ -1,5 +1,6 @@
 import copy
 import re
+import sys
 
 
 def cleaning_text(book_aadress):
@@ -45,7 +46,7 @@ def decode(ciphertext, numbers):
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, len(ciphertext)):
-        current_number = ciphertext[i]
+        current_number = int(ciphertext[i])
         for letter, number_list in numbers_to_use.items():
             if current_number in number_list:
                 output_list.append(letter)
@@ -53,17 +54,40 @@ def decode(ciphertext, numbers):
 
 
 def main():
-    new_text = cleaning_text('book1.txt')
-    words = get_words(new_text)
-    numbers = get_numbers(words)
-    # print(numbers)
-    message = "Pollo"
-    cipher = [3, 9, 46, 160, 33]
-    l = encode(message, numbers)
-    d = decode(cipher, numbers)
-    print(l)
-    print(d)
-    print(numbers)
+    ENCODE = False
+    DECODE = False
+    while ENCODE is False and DECODE is False:
+        mode = input("Would you like to (E)ncode ot (D)ecode a file?")
+        if mode == 'E':
+            ENCODE = True
+            DECODE = False
+
+        if mode == 'D':
+            ENCODE = False
+            DECODE = True
+
+    if ENCODE:
+        plaintext_file_address = input("Please enter the address of the file you would like to encrypt\n")
+        key_file = input("Please enter the address of the key file you would like to use\n")
+        file = open("encrypted_file", "w")
+        plaintext = cleaning_text(plaintext_file_address)
+        words = get_words(cleaning_text(key_file))
+        numbers = get_numbers(words)
+        l = encode(plaintext, numbers)
+        file.write(str(l))
+        file.close()
+        print("Your encrypted file has been generated! ")
+
+    if DECODE:
+        cipher_file = input("Please enter the address of the file you would like to decrypt\n").split(",")
+        key_file = input("Please enter the address of the key file you would like to use\n")
+        file = open("decrypted_file", "w")
+        words = get_words(cleaning_text(key_file))
+        numbers = get_numbers(words)
+        d = decode(cipher_file, numbers)
+        file.write(d)
+        file.close()
+        print("Your decrypted file has been generated! ")
 
 
 main()
