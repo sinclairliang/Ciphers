@@ -1,7 +1,9 @@
+# Sinclair Liang
+import time
 import copy
 import re
 import sys
-
+import pyprind
 
 def banner():
     banner = '''
@@ -73,7 +75,11 @@ def get_numbers(words):
     numbers = dict()
     for i in range(0, len(words) - 1):
         if len(words[i]) > 0:
+
             current_letter = words[i][0]
+            sys.stdout.write('\r')
+            sys.stdout.write("Now encrypting word: "+current_letter)
+            sys.stdout.flush()
             if current_letter in numbers:
                 numbers[current_letter].append(i + 1)
             else:
@@ -88,12 +94,16 @@ def encode(plaintext, numbers):
     :param numbers: a list containing numbers indicating the position of words
     :return: A list of numbers after encryption
     """
+    length = len(plaintext)
+    bar = pyprind.ProgBar(length, width=40)
+
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
-    for i in range(0, len(plaintext)):
+    for i in range(0, length):
         current_letter = plaintext[i].upper()
         if current_letter in numbers_to_use:
             output_list.append(numbers_to_use[current_letter].pop(0))
+        bar.update()
     return output_list
 
 
@@ -104,13 +114,17 @@ def decode(ciphertext, numbers):
     :param numbers: a list containing numbers indicating the position of words
     :return: plaintext without space nor special characters
     """
+    length = len(ciphertext)
+    bar = pyprind.ProgBar(length, width=40)
+
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
-    for i in range(0, len(ciphertext)):
+    for i in range(0, length):
         current_number = int(ciphertext[i])
         for letter, number_list in numbers_to_use.items():
             if current_number in number_list:
                 output_list.append(letter)
+        bar.update()
     return ''.join(output_list)
 
 
@@ -130,6 +144,7 @@ def main():
     if ENCODE:
         plaintext_file_address = input("Please enter the address of the file you would like to encrypt\n")
         key_file = input("Please enter the address of the key file you would like to use\n")
+        start_time = time.time()
         file = open("encrypted_file", "w")
         plaintext = cleaning_text(plaintext_file_address)
         words = get_words(cleaning_text(key_file))
@@ -137,11 +152,13 @@ def main():
         l = encode(plaintext, numbers)
         file.write(str(l))
         file.close()
-        print("Your encrypted file has been generated! ")
+        end_time = time.time()
+        print("Your encrypted file has been generated! " + "%s %d m %.2f s " % ("Finish grading! Time elapsed:", int((end_time - start_time)/60), (end_time - start_time)%60))
 
     if DECODE:
         cipher_file_address = input("Please enter the address of the file you would like to decrypt\n")
         key_file = input("Please enter the address of the key file you would like to use\n")
+        start_time = time.time()
         file = open("decrypted_file", "w")
         cipher_list = cleaning_cipher(cipher_file_address)
         words = get_words(cleaning_text(key_file))
@@ -149,7 +166,9 @@ def main():
         d = decode(cipher_list, numbers)
         file.write(d)
         file.close()
-        print("Your decrypted file has been generated! ")
+        end_time = time.time()
+        print()
+        print("Your decrypted file has been generated! " + "%s %d m %.2f s " % ("Finish grading! Time elapsed:", int((end_time - start_time)/60), (end_time - start_time)%60))
 
 
 if __name__ == '__main__':
