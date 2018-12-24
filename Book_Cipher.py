@@ -10,6 +10,15 @@ def cleaning_text(book_aadress):
     return new_text
 
 
+def cleaning_cipher(cipher_file_address):
+	cipher_text = open(cipher_file_address).read()
+	cipher_text_list = cipher_text[1:-1].split(",")
+	for i in range(0,len(cipher_text_list)):
+		cipher_text_list[i] = int(cipher_text_list[i])
+	return cipher_text_list
+
+
+
 def get_words(text):
     list_of_words = list()
     words = re.split(r'\s+', text)
@@ -79,12 +88,13 @@ def main():
         print("Your encrypted file has been generated! ")
 
     if DECODE:
-        cipher_file = input("Please enter the address of the file you would like to decrypt\n").split(",")
+        cipher_file_address = input("Please enter the address of the file you would like to decrypt\n")
         key_file = input("Please enter the address of the key file you would like to use\n")
         file = open("decrypted_file", "w")
+        cipher_list = cleaning_cipher(cipher_file_address)
         words = get_words(cleaning_text(key_file))
         numbers = get_numbers(words)
-        d = decode(cipher_file, numbers)
+        d = decode(cipher_list, numbers)
         file.write(d)
         file.close()
         print("Your decrypted file has been generated! ")
