@@ -3,32 +3,73 @@ import re
 import sys
 
 
-def cleaning_text(book_aadress):
-    original_text = open(book_aadress).read()
+def banner():
+    banner = '''
+    
+             oooooooooo.                      oooo                 
+             `888'   `Y8b                     `888                 
+              888     888  .ooooo.   .ooooo.   888  oooo   .oooo.o 
+              888oooo888' d88' `88b d88' `88b  888 .8P'   d88(  "8 
+              888    `88b 888   888 888   888  888888.    `"Y88b.  
+              888    .88P 888   888 888   888  888 `88b.  o.  )88b 
+             o888bood8P'  `Y8bod8P' `Y8bod8P' o888o o888o 8""888P' 
+                                                                   
+                                                                   
+                                                                   
+           .oooooo.    o8o             oooo                           
+          d8P'  `Y8b   `"'             `888                           
+         888          oooo  oo.ooooo.   888 .oo.    .ooooo.  oooo d8b 
+         888          `888   888' `88b  888P"Y88b  d88' `88b `888""8P 
+         888           888   888   888  888   888  888ooo888  888     
+         `88b    ooo   888   888   888  888   888  888    .o  888     
+          `Y8bood8P'  o888o  888bod8P' o888o o888o `Y8bod8P' d888b    
+                             888                                      
+                            o888o                                     
+                                                                      
+    '''
+    return banner
+
+
+def cleaning_text(book_address):
+    """
+    :param book_address: the address of the book used as the key
+    :return: words without any special characters
+    """
+    original_text = open(book_address).read()
     new_text = re.sub('[^a-zA-Z0-9]', r' ', original_text)
     re.sub(' +', ' ', new_text).strip()
     return new_text
 
 
 def cleaning_cipher(cipher_file_address):
-	cipher_text = open(cipher_file_address).read()
-	cipher_text_list = cipher_text[1:-1].split(",")
-	for i in range(0,len(cipher_text_list)):
-		cipher_text_list[i] = int(cipher_text_list[i])
-	return cipher_text_list
-
+    """
+    :param cipher_file_address: the address of the encrypted file
+    :return: a list of integers
+    """
+    cipher_text = open(cipher_file_address).read()
+    cipher_text_list = cipher_text[1:-1].split(",")
+    for i in range(0, len(cipher_text_list)):
+        cipher_text_list[i] = int(cipher_text_list[i])
+    return cipher_text_list
 
 
 def get_words(text):
+    """
+    :param text: words without any special characters
+    :return: a list of words
+    """
     list_of_words = list()
     words = re.split(r'\s+', text)
-    # return list_of_words
     for word in words:
         list_of_words.append(word.upper())
     return list_of_words
 
 
 def get_numbers(words):
+    """
+    :param words: a list of words
+    :return: a list containing numbers indicating the position of words
+    """
     numbers = dict()
     for i in range(0, len(words) - 1):
         if len(words[i]) > 0:
@@ -42,6 +83,11 @@ def get_numbers(words):
 
 
 def encode(plaintext, numbers):
+    """
+    :param plaintext: plaintext
+    :param numbers: a list containing numbers indicating the position of words
+    :return: A list of numbers after encryption
+    """
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, len(plaintext)):
@@ -52,6 +98,12 @@ def encode(plaintext, numbers):
 
 
 def decode(ciphertext, numbers):
+    """
+
+    :param ciphertext: ciphertext
+    :param numbers: a list containing numbers indicating the position of words
+    :return: plaintext without space nor special characters
+    """
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, len(ciphertext)):
@@ -66,7 +118,7 @@ def main():
     ENCODE = False
     DECODE = False
     while ENCODE is False and DECODE is False:
-        mode = input("Would you like to (E)ncode ot (D)ecode a file?")
+        mode = input("Would you like to (E)ncode ot (D)ecode a file?\n")
         if mode == 'E':
             ENCODE = True
             DECODE = False
@@ -100,4 +152,6 @@ def main():
         print("Your decrypted file has been generated! ")
 
 
-main()
+if __name__ == '__main__':
+    sys.stdout.write(banner())
+    main()
