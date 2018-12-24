@@ -18,7 +18,7 @@ In other words, this cipher is close to impossible to break without the knowing 
 
 ## ***Download python-grader***
 
-You can download the latest version of Cipher by cloning the GitHub repository.
+You can download the latest version of `Ciphers` by cloning the GitHub repository.
 
 ` git clone https://github.com/sinclairliang/Ciphers.git`
 
