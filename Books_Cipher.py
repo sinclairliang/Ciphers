@@ -4,7 +4,7 @@ import copy
 import re
 import sys
 import pyprind
-
+import os
 
 def banner():
     banner = '''
@@ -156,6 +156,7 @@ def main():
         end_time = time.time()
         print("Your encrypted file has been generated! " + "%s %d m %.2f s " % (
             "Finish encrypting! Time elapsed:", int((end_time - start_time) / 60), (end_time - start_time) % 60))
+        os.system("open encrypted_file")
 
     if DECODE:
         cipher_file_address = input("Please enter the address of the file you would like to decrypt\n")
@@ -169,10 +170,9 @@ def main():
         file.write(d)
         file.close()
         end_time = time.time()
-        print()
         print("Your decrypted file has been generated! " + "%s %d m %.2f s " % (
             "Finish decrypting! Time elapsed:", int((end_time - start_time) / 60), (end_time - start_time) % 60))
-
+        os.system("open decrypted_file")
 
 if __name__ == '__main__':
     sys.stdout.write(banner())
