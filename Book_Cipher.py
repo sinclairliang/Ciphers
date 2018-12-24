@@ -5,6 +5,7 @@ import re
 import sys
 import pyprind
 
+
 def banner():
     banner = '''
     
@@ -78,7 +79,7 @@ def get_numbers(words):
 
             current_letter = words[i][0]
             sys.stdout.write('\r')
-            sys.stdout.write("Now encrypting word: "+current_letter)
+            sys.stdout.write("Now encrypting word: " + current_letter)
             sys.stdout.flush()
             if current_letter in numbers:
                 numbers[current_letter].append(i + 1)
@@ -153,7 +154,8 @@ def main():
         file.write(str(l))
         file.close()
         end_time = time.time()
-        print("Your encrypted file has been generated! " + "%s %d m %.2f s " % ("Finish grading! Time elapsed:", int((end_time - start_time)/60), (end_time - start_time)%60))
+        print("Your encrypted file has been generated! " + "%s %d m %.2f s " % (
+            "Finish encrypting! Time elapsed:", int((end_time - start_time) / 60), (end_time - start_time) % 60))
 
     if DECODE:
         cipher_file_address = input("Please enter the address of the file you would like to decrypt\n")
@@ -168,7 +170,8 @@ def main():
         file.close()
         end_time = time.time()
         print()
-        print("Your decrypted file has been generated! " + "%s %d m %.2f s " % ("Finish grading! Time elapsed:", int((end_time - start_time)/60), (end_time - start_time)%60))
+        print("Your decrypted file has been generated! " + "%s %d m %.2f s " % (
+            "Finish decrypting! Time elapsed:", int((end_time - start_time) / 60), (end_time - start_time) % 60))
 
 
 if __name__ == '__main__':
