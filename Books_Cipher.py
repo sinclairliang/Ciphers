@@ -6,6 +6,7 @@ import sys
 import pyprind
 import os
 
+
 def banner():
     banner = '''
     
@@ -143,8 +144,10 @@ def main():
             DECODE = True
 
     if ENCODE:
-        plaintext_file_address = input("Please enter the address of the file you would like to encrypt\n")
-        key_file = input("Please enter the address of the key file you would like to use\n")
+        plaintext_file_address = input(
+            "Please enter the address of the file you would like to encrypt\n")
+        key_file = input(
+            "Please enter the address of the key file you would like to use\n")
         start_time = time.time()
         file = open("encrypted_file", "w")
         plaintext = cleaning_text(plaintext_file_address)
@@ -159,8 +162,10 @@ def main():
         os.system("open encrypted_file")
 
     if DECODE:
-        cipher_file_address = input("Please enter the address of the file you would like to decrypt\n")
-        key_file = input("Please enter the address of the key file you would like to use\n")
+        cipher_file_address = input(
+            "Please enter the address of the file you would like to decrypt\n")
+        key_file = input(
+            "Please enter the address of the key file you would like to use\n")
         start_time = time.time()
         file = open("decrypted_file", "w")
         cipher_list = cleaning_cipher(cipher_file_address)
@@ -173,6 +178,7 @@ def main():
         print("Your decrypted file has been generated! " + "%s %d m %.2f s " % (
             "Finish decrypting! Time elapsed:", int((end_time - start_time) / 60), (end_time - start_time) % 60))
         os.system("open decrypted_file")
+
 
 if __name__ == '__main__':
     sys.stdout.write(banner())
