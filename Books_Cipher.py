@@ -77,7 +77,6 @@ def get_numbers(words):
     numbers = dict()
     for i in range(0, len(words) - 1):
         if len(words[i]) > 0:
-
             current_letter = words[i][0]
             sys.stdout.write('\r')
             sys.stdout.write("Now encrypting word: " + current_letter)
