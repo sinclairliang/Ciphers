@@ -110,7 +110,6 @@ def encode(plaintext, numbers):
 
 def decode(ciphertext, numbers):
     """
-
     :param ciphertext: ciphertext
     :param numbers: a list containing numbers indicating the position of words
     :return: plaintext without space nor special characters
