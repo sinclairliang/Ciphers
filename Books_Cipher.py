@@ -118,6 +118,7 @@ def decode(ciphertext, numbers):
     bar = pyprind.ProgBar(length, width=40)
 
     numbers_to_use = copy.deepcopy(numbers)
+    # test git
     output_list = list()
     for i in range(0, length):
         current_number = int(ciphertext[i])
