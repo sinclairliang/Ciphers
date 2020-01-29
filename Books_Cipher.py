@@ -116,7 +116,7 @@ def decode(ciphertext, numbers):
     """
     length = len(ciphertext)
     bar = pyprind.ProgBar(length, width=40)
-    # test
+    # test 1
     numbers_to_use = copy.deepcopy(numbers)
     output_list = list()
     for i in range(0, length):
